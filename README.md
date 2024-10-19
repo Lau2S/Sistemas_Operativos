@@ -1,2 +1,3 @@
-# 'demo_code'
-Esto es un archivo de prueba
+# Threads, Processes and Sequential
+
+This repository contains the archives for an exercise for the Operating Systems class
