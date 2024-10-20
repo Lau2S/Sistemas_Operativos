@@ -16,34 +16,38 @@ import multiprocessing
 import sys
 
 class FiboWorker(multiprocessing.Process):
-  def __init__(self, n, pid):
+  def __init__(self, vector, pid):
     multiprocessing.Process.__init__(self)
-    self.n = n
+    self.vector = vector
     self._pid = pid
 
   def run(self):
-    print(f"[{self._pid}] Fibonacci de {self.n} es {fibo(self.n)}")
+    self.vector[self._pid] = fibo(self.vector[self._pid])
+    print(f"[{self._pid}] Fibonacci calculado: {self.vector[self._pid]}")
 
 def main():
-  max_fibo = 33
-  if len(sys.argv) != 1:
-    max_fibo = int(sys.argv[1])
-  num_cpus = multiprocessing.cpu_count() # CPUs disponibles
-  print(f"Calculando el fibonacci {max_fibo} en {num_cpus} CPUs")
-  procesos = [ ] # Vector de procesos
-  ts = time() # se toma tiempo
-  for x in range(144): # Ciclo para crear trabajadores
-    print(f"Trabajador {x} comienza")
-    worker = FiboWorker(max_fibo,x)
-    worker.start()
-    procesos.append(worker)
+    vector = multiprocessing.Array('i', [33] * 144)  # Vector de 144 posiciones, inicializado con 33
+    num_cpus = multiprocessing.cpu_count()  # Número de CPUs disponibles
+    print(f"Procesando un vector de longitud {len(vector)} en {num_cpus} CPUs")
 
-  for worker in procesos: # Ciclo para esperar por trabajadores
-    print(f"Esperando por trabajador {worker._pid}")
-    worker.join()
+    procesos = []  # Vector de procesos
+    ts = time()  # Tomar el tiempo inicial
 
-  print(f"Tomo {time() - ts}")
+    # Crear un proceso por cada posición del vector
+    for pid in range(len(vector)):
+        print(f"Trabajador {pid} comienza")
+        worker = FiboWorker(vector, pid)
+        worker.start()
+        procesos.append(worker)
 
+    # Esperar a que todos los procesos terminen
+    for worker in procesos:
+        worker.join()
+
+    print(f"Proceso completo. Tiempo total: {time() - ts} segundos")
+ 
 
 if __name__ == "__main__":
-  main()
+    main()
+
+
