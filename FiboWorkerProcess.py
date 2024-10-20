@@ -1,7 +1,7 @@
 #
 #
-# Este script define un hilo que se encarga de calcular la posicion 'n' en la
-# serie de Fibonacci.
+# Este script se encarga de procesar los elementos de un vector de longitud 144 usando la versión con Process. 
+# Cada posición del vector se inicializa con el valor 33 y se calcula su fibonnacci, el resultado siendo guardado en la misma posicion i del vector
 #
 # Aurores:
 # Gabriela Guzmán - guzman.gabriela@correounivalle.edu.co
