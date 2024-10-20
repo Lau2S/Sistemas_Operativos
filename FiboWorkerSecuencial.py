@@ -19,7 +19,7 @@ def fiboWorkerSecuencial():
         vector.append(33)
         numero = vector[n]
         vector[n] = fibo(vector[n])
-        print(f"El fibonacci del numero {numero} ubicado en la posicion {n} es {vector[n]}")
+        print(f"El fibonacci del numero {numero} ubicado en la posicion {n+1} es {vector[n]}")
     print(f"El proceso tomo {time() - ti}")
 
 fiboWorkerSecuencial()
